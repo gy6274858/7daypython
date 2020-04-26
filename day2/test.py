@@ -1,0 +1,26 @@
+import sys
+
+sys.path.append('./external-libraries')
+import json
+import re
+import requests
+import datetime
+from bs4 import BeautifulSoup
+import os
+
+
+def maya(url):
+    a = url.split('[/img]')
+    f = open('./5.html','w')
+    end = """" border="0" onload="if(this.width>screen.width*0.7) {this.resized=true; this.width=screen.width*0.7; this.alt='Click here to open new window\nCTRL+Mouse wheel to zoom in/out';}" onmouseover="if(this.width>screen.width*0.7) {this.resized=true; this.width=screen.width*0.7; this.style.cursor='hand'; this.alt='Click here to open new window\nCTRL+Mouse wheel to zoom in/out';}" onclick="if(!this.resized) {return true;} else {window.open(this.src);}" onmousewheel="return imgzoom(this);" alt="">"""
+    for w in a:
+        f.write('<img src="' + w + end+'\n')
+    f.close()
+
+url="""https://www.privacypic.com/images/2020/04/21/M50X9F.jpg[/img]https://www.privacypic.com/images/2020/04/21/M50Jfz.jpg[/img]https://www.privacypic.com/images/2020/04/21/M50mIg.jpg[/img]https://www.privacypic.com/images/2020/04/21/M505hI.jpg[/img]https://www.privacypic.com/images/2020/04/21/M509WN.jpg[/img]https://www.privacypic.com/images/2020/04/21/M50AjQ.jpg[/img]https://www.privacypic.com/images/2020/04/21/M50zMY.jpg[/img]https://www.privacypic.com/images/2020/04/21/M50NSP.jpg[/img]https://www.privacypic.com/images/2020/04/21/M50Z8X.jpg[/img]"""
+url2="""https://www.privacypic.com/images/2020/04/21/M5JCA0.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JKDG.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5J9Fq.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JJGj.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JNsU.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JAHZ.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5Jz23.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JbJn.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5Jip9.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JDGH.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JVDh.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JcgJ.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JvF7.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JyAy.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5J23R.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JBHa.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JhKV.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JoBu.jpg[/img]https://www.privacypic.com/images/2020/04/21/M5JQpg.jpg[/img]"""
+url3="""https://www.smmimg.com/u/20200423/07014216.jpg[/img]https://www.smmimg.com/u/20200423/07014744.jpg[/img]https://www.smmimg.com/u/20200423/07015529.jpg[/img]https://www.smmimg.com/u/20200423/07015932.jpg[/img]https://www.smmimg.com/u/20200423/07020325.jpg[/img]https://www.smmimg.com/u/20200423/07020962.jpg[/img]https://www.smmimg.com/u/20200423/07021572.jpg[/img]https://www.smmimg.com/u/20200423/07021976.jpg[/img]https://www.smmimg.com/u/20200423/07022491.jpg[/img]"""
+url4="""https://www.privacypic.com/images/2020/04/23/M9rVG7.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9rjgR.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9rqpJ.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9ri2h.jpg[/img]https://www.privacypic.com/images/2020/04/23/M96S4V.jpg[/img]https://www.privacypic.com/images/2020/04/23/M96JXg.jpg[/img]https://www.privacypic.com/images/2020/04/23/M96X7F.jpg[/img]https://www.privacypic.com/images/2020/04/23/M96kPu.jpg[/img]https://www.privacypic.com/images/2020/04/23/M96RZa.jpg[/img]https://www.privacypic.com/images/2020/04/23/M96NrP.jpg[/img]https://www.privacypic.com/images/2020/04/23/M96aIa.jpg[/img]https://www.privacypic.com/images/2020/04/23/M96ejJ.jpg[/img]https://www.privacypic.com/images/2020/04/23/M96g67.jpg[/img]https://www.privacypic.com/images/2020/04/23/M968zR.jpg[/img]https://www.privacypic.com/images/2020/04/23/M966My.jpg[/img]
+"""
+url5="""https://www.privacypic.com/images/2020/04/23/M9aLHu.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9alq7.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9aFGJ.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9auFR.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9axNa.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9aGsV.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9aSJg.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9ak2z.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9ayl0.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9aXDN.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9aZHB.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9ai2p.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9aCFQ.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9aqpj.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9aVLG.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9aB3Z.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9aQB9.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9a4Lh.jpg[/img]https://www.privacypic.com/images/2020/04/23/M9aIVJ.jpg[/img]"""
+maya(url5)
