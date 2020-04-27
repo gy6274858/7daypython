@@ -50,12 +50,12 @@ def saveMovieInfoToFile(lastId, arr):
           "agent_version=9.11.5&business_type=17&content_id=15068699100&page=&page_size=10&types=time&last_id="
     url += str(lastId)
     responseTxt = getMovieinfo(url)
-    print(responseTxt)
+    # print(responseTxt)
     responseJson = json.loads(responseTxt)
     comments = responseJson['data']['comments']
     for val in comments:
         if 'content' in val.keys():
-            print(val['content'])
+            # print(val['content'])
             arr.append(val['content'])
         lastId = str(val['id'])
     return lastId
@@ -83,7 +83,7 @@ def fenci(text):
     参数 text:需要分词的句子或文本
     return：分词结果
     '''
-    jieba.load_userdict('add_words.txt')
+    # jieba.load_userdict('add_words.txt')
     seg = jieba.lcut(text, cut_all=False)
 
     return seg
@@ -178,7 +178,7 @@ def text_detection(text, file_path):
 # 评论是多分页的，得多次请求爱奇艺的评论接口才能获取多页评论,有些评论含有表情、特殊字符之类的
 # num 是页数，一页10条评论，假如爬取1000条评论，设置num=100
 if __name__ == "__main__":
-    num = 100
+    num = 10
     lastId = '0'
     arr = []
     with open('aqy.txt', 'a', encoding='utf-8') as f:
