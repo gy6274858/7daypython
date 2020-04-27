@@ -23,14 +23,14 @@ def getMovieinfo(url):
     '''
     session = requests.Session()
     headers = {
-        "User_Agent": "Mozilla/5.0",
+        "User-Agent": "Mozilla/5.0",
         "Accept": "application/json",
         "Referer": "http:/m.iqiyi.com/v_19rqriflzg.html",
         "Origin": "http://m.iqiyi.com",
-        "Host": "sns-comment,iqiyi.com",
+        "Host": "sns-comment.iqiyi.com",
         "Connection": "keep-alive",
         "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
-        "Accept-Encoding": "gzip, deflate, br"
+        "Accept-Encoding": "gzip, deflate"
     }
     response = session.get(url, headers=headers)
     if response.status_code == 200:
@@ -46,11 +46,13 @@ def saveMovieInfoToFile(lastId, arr):
     参数  lastId:最后一条评论ID  arr:存放文本的list
     :return: 新的lastId
     '''
-    url = "https://sns-comment.iqiyi.com/v3/comment/get_comments.action?agent_type=118&agent_version=9.11.5&business_type=17&content_id=15068699100&page=&page_size=10&types=time&last_id="
+    url = "https://sns-comment.iqiyi.com/v3/comment/get_comments.action?agent_type=118&" \
+          "agent_version=9.11.5&business_type=17&content_id=15068699100&page=&page_size=10&types=time&last_id="
     url += str(lastId)
     responseTxt = getMovieinfo(url)
+    print(responseTxt)
     responseJson = json.loads(responseTxt)
-    comments = responseJson['data']['commnets']
+    comments = responseJson['data']['comments']
     for val in comments:
         if 'content' in val.keys():
             print(val['content'])
@@ -129,7 +131,6 @@ def drawcounts(counts, num):
     plt.title('词频统计结果')
     plt.show()
 
-    return
 
 def drawcloud(word_f):
     '''
@@ -177,12 +178,12 @@ def text_detection(text, file_path):
 # 评论是多分页的，得多次请求爱奇艺的评论接口才能获取多页评论,有些评论含有表情、特殊字符之类的
 # num 是页数，一页10条评论，假如爬取1000条评论，设置num=100
 if __name__ == "__main__":
-    num = 20
-    lastID = '0'
+    num = 100
+    lastId = '0'
     arr = []
     with open('aqy.txt', 'a', encoding='utf-8') as f:
         for i in range(num):
-            lastID = saveMovieInfoToFile(lastID, arr)
+            lastId = saveMovieInfoToFile(lastId, arr)
             time.sleep(0.5)
         for item in arr:
             Item = clear_special_char(item)
